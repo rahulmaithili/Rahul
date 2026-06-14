@@ -1,65 +1,107 @@
-import { extractKeywords, normalizeTopic } from "../../core/text.js";
-import { slugify } from "../../core/slug.js";
 import type { ResearchNotes, ResearchRequest, ResearchService, ResearchSource } from "./types.js";
+import type { ResearchProviderContext } from "./providers/types.js";
+import { ManualSourceProvider } from "./providers/manual.js";
+import { deduplicateSources } from "./resolvers/dedup.js";
+import { rankSources } from "./resolvers/rank.js";
+import { buildNote } from "./resolvers/summarize.js";
 
 export class DeterministicResearchService implements ResearchService {
   async research(request: ResearchRequest): Promise<ResearchNotes> {
-    const normalizedTopic = normalizeTopic(request.topic);
-    const keywords = extractKeywords(normalizedTopic, 4);
-    const retrievedAt = new Date().toISOString();
-    const sources = keywords.map((keyword, index) =>
-      this.createManualSource(keyword, index, retrievedAt)
-    );
-    const keyPoints = this.buildKeyPoints(request, keywords);
-    const includeQuotes = request.length !== "short";
-    const notes = [
-      {
-        id: "research-note-1",
-        topic: normalizedTopic,
-        keyPoints,
-        quotes: includeQuotes
-          ? sources.slice(0, 2).map((source) => ({
-              text: `Placeholder citation for ${source.title}.`,
-              sourceId: source.id
-            }))
-          : [],
-        sources,
-        salience: 0.72,
-        confidence: 0.48
-      }
-    ];
+    const normalizedTopic = request.topic.trim().toLowerCase();
+    const keywords = extractKeywordsFromTopic(normalizedTopic, 4);
+    const context = this.buildContext(request);
+    const sources = await this.collectSources(request, keywords, context);
+    const deduped = deduplicateSources(sources);
+    const ranked = rankSources(deduped);
+    const selected = ranked.slice(0, Math.min(context.maxSources, ranked.length));
+    const note = buildNote({
+      topic: normalizedTopic,
+      keywords,
+      sources: selected,
+      maxSources: context.maxSources,
+      includeQuotes: context.includeQuotes
+    });
+    const confidence = Math.min(0.9, note.confidence + selected.length * 0.03);
 
     return {
       topic: request.topic,
       normalizedTopic,
       language: request.language,
       audience: request.audience,
-      notes,
-      sources,
-      confidence: 0.48
+      notes: [note],
+      sources: selected,
+      confidence
     };
   }
 
-  private createManualSource(keyword: string, index: number, retrievedAt: string): ResearchSource {
+  private buildContext(request: ResearchRequest): ResearchProviderContext {
     return {
-      id: `manual-source-${index + 1}`,
-      title: `Manual source: ${keyword}`,
-      url: `https://example.com/research/${slugify(keyword)}`,
-      snippet: `Use this deterministic source placeholder for ${keyword} until a search provider is configured.`,
-      provider: "manual",
-      retrievedAt,
-      confidence: 0.55
+      maxSources: 5,
+      includeQuotes: request.length !== "short",
+      audience: request.audience,
+      language: request.language
     };
   }
 
-  private buildKeyPoints(request: ResearchRequest, keywords: string[]): string[] {
-    const audience = request.audience ? ` for ${request.audience}` : "";
-    const targetKeyword = request.targetKeyword ? ` including ${request.targetKeyword}` : "";
+  private async collectSources(
+    request: ResearchRequest,
+    keywords: string[],
+    context: ResearchProviderContext
+  ): Promise<ResearchSource[]> {
+    const provider = new ManualSourceProvider();
 
-    return [
-      `Define ${request.topic}${audience}${targetKeyword}.`,
-      `Explain the main benefits, risks, and trade-offs around ${keywords[0] ?? request.topic}.`,
-      `Add practical steps, examples, and measurable outcomes readers can apply.`
-    ];
+    return provider.discover({
+      topic: request.topic,
+      keywords,
+      context
+    });
   }
+}
+
+const STOP_WORDS = new Set([
+  "a",
+  "an",
+  "and",
+  "are",
+  "as",
+  "at",
+  "be",
+  "by",
+  "for",
+  "from",
+  "how",
+  "in",
+  "is",
+  "it",
+  "of",
+  "on",
+  "or",
+  "that",
+  "the",
+  "to",
+  "what",
+  "when",
+  "where",
+  "which",
+  "with"
+]);
+
+function extractKeywordsFromTopic(topic: string, limit = 5): string[] {
+  const tokens = topic
+    .split(/\s+/u)
+    .filter((token) => token.length > 2 && !STOP_WORDS.has(token));
+
+  const uniqueTokens: string[] = [];
+
+  for (const token of tokens) {
+    if (!uniqueTokens.includes(token)) {
+      uniqueTokens.push(token);
+    }
+
+    if (uniqueTokens.length >= limit) {
+      break;
+    }
+  }
+
+  return uniqueTokens;
 }

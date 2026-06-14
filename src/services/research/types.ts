@@ -1,11 +1,21 @@
 import type { TopicInput } from "../../core/types.js";
 
+export type ResearchProvider = "manual" | "web" | "search";
+
+export interface ResearchProviderContext {
+  maxSources: number;
+  includeQuotes: boolean;
+  audience?: string;
+  language?: string;
+}
+
 export interface ResearchSource {
   id: string;
   title: string;
   url: string;
   snippet: string;
-  provider: "manual" | "web" | "search";
+  provider: ResearchProvider;
+  providerName?: string;
   retrievedAt: string;
   confidence: number;
 }
