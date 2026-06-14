@@ -1,0 +1,59 @@
+{
+  "topic": "sustainable garden",
+  "slug": "sustainable-garden",
+  "seoBrief": {
+    "targetKeyword": "sustainable garden",
+    "keywords": ["sustainable", "garden"],
+    "searchIntent": "informational",
+    "title": "Guide to sustainable garden",
+    "metaDescription": "Learn sustainable garden with a clear outline, practical steps, SEO recommendations, and cited research notes.",
+    "score": 75
+  },
+  "outline": [
+    {
+      "heading": "Define sustainable garden",
+      "subheadings": ["Explain sustainable garden in this section.", "Add example 1 for sustainable garden."]
+    },
+    {
+      "heading": "Explain the main benefits, risks, and trade-offs around sustainable",
+      "subheadings": ["Explain sustainable garden in this section.", "Add example 2 for sustainable garden."]
+    },
+    {
+      "heading": "Add practical steps, examples, and measurable outcomes readers can apply",
+      "subheadings": ["Explain sustainable garden in this section.", "Add example 3 for sustainable garden."]
+    }
+  ],
+  "draftBody": "# Guide to sustainable garden\n\n**Target keyword:** sustainable garden\n\n## Define sustainable garden\n\nCover sustainable garden with practical context for undefined.\n\n- Explain sustainable garden in this section.\n- Add example 1 for sustainable garden.\n\nSource: [Manual source: sustainable](https://example.com/research/sustainable)\n\n## Explain the main benefits, risks, and trade-offs around sustainable\n\nCover sustainable garden with practical context for undefined.\n\n- Explain sustainable garden in this section.\n- Add example 2 for sustainable garden.\n\nSource: [Manual source: garden](https://example.com/research/garden)\n\n## Add practical steps, examples, and measurable outcomes readers can apply\n\nCover sustainable garden with practical context for undefined.\n\n- Explain sustainable garden in this section.\n- Add example 3 for sustainable garden.\n\nSource: [Manual source: for](https://example.com/research/for)\n\n## Frequently Asked Questions\n\n### What is sustainable garden?\n\nAdd a concise, source-backed answer for this question.\n\n### How does sustainable garden work?\n\nAdd a concise, source-backed answer for this question.\n\n### What are the best practices for sustainable garden?\n\nAdd a concise, source-backed answer for this question.\n\n## Sources\n\n1. [Manual source: sustainable](https://example.com/research/sustainable) - Use this deterministic source placeholder for sustainable until a search provider is configured.\n2. [Manual source: garden](https://example.com/research/garden) - Use this deterministic source placeholder for garden until a search provider is configured.\n3. [Manual source: for](https://example.com/research/for) - Use this deterministic source placeholder for for until a search provider is configured.
+4. [Manual source: beginners](https://example.com/research/beginners) - Use this deterministic source placeholder for beginners until a search provider is configured.",
+  "metaTitle": "Guide to sustainable garden",
+  "metaDescription": "Learn sustainable garden with a clear outline, practical steps, SEO recommendations, and cited research notes.",
+  "faqs": ["What is sustainable garden?", "How does sustainable garden work?", "What are the best practices for sustainable garden?"],
+  "schemaJsonLd": "{\"@context\":\"https://schema.org\",\"@type\":\"Article\",\"headline\":\"Guide to sustainable garden\",\"description\":\"Learn sustainable garden with a clear outline, practical steps, SEO recommendations, and cited research notes.\",\"keywords\":[\"sustainable\",\"garden\"],\"mainEntityOfPage\":{\"@type\":\"WebPage\",\"@id\":\"https://example.com/sustainable-garden\"},\"author\":{\"@type\":\"Organization\",\"name\":\"Content Automation Tool\"}}",
+  "citations": [
+    {
+      "id": "manual-source-1",
+      "title": "Manual source: sustainable",
+      "url": "https://example.com/research/sustainable",
+      "note": "Use this deterministic source placeholder for sustainable until a search provider is configured."
+    },
+    {
+      "id": "manual-source-2",
+      "title": "Manual source: garden",
+      "url": "https://example.com/research/garden",
+      "note": "Use this deterministic source placeholder for garden until a search provider is configured."
+    },
+    {
+      "id": "manual-source-3",
+      "title": "Manual source: for",
+      "url": "https://example.com/research/for",
+      "note": "Use this deterministic source placeholder for for until a search provider is configured."
+    },
+    {
+      "id": "manual-source-4",
+      "title": "Manual source: beginners",
+      "url": "https://example.com/research/beginners",
+      "note": "Use this deterministic source placeholder for beginners until a search provider is configured."
+    }
+  ],
+  "createdAt": "2024-01-01T00:00:00.000Z"
+}

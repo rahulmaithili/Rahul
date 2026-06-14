@@ -1,0 +1,36 @@
+{
+  "language": "en",
+  "tone": "professional",
+  "audience": "beginners",
+  "outputDir": "output",
+  "research": {
+    "maxSources": 5,
+    "includeQuotes": true
+  },
+  "seo": {
+    "minTitleLength": 35,
+    "maxTitleLength": 60,
+    "metaDescriptionMin": 120,
+    "metaDescriptionMax": 155
+  },
+  "providers": {
+    "openai": {
+      "enabled": false
+    },
+    "anthropic": {
+      "enabled": false
+    },
+    "gemini": {
+      "enabled": false
+    },
+    "serpapi": {
+      "enabled": false
+    },
+    "brave": {
+      "enabled": false
+    },
+    "tavily": {
+      "enabled": false
+    }
+  }
+}
